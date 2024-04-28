@@ -5,14 +5,17 @@ use serde_json::{json, Value};
 
 #[tokio::main]
 async fn main() {
-    let res = fetch_data().await;
-    println!("{:?}", res);
+    let prompt = parse_args();
+    match ask_gpt(prompt).await {
+        Ok(response) => print_response(&response),
+        Err(e) => println!("Error: {}", e),
+    }
 }
 
-async fn fetch_data() -> Result<Value, Error> {
+async fn ask_gpt(prompt: String) -> Result<Value, Error> {
     let api_key = env::var("OPENAI_APIKEY").unwrap();
     let client = Client::new();
-    let body = build_request_body("Say this is a test");
+    let body = build_request_body(&prompt);
 
     let res = client.post("https://api.openai.com/v1/chat/completions")
         .header("Content-Type", "application/json")
@@ -21,9 +24,8 @@ async fn fetch_data() -> Result<Value, Error> {
         .send()
         .await?;
 
-    let json_response = res.json::<Value>().await?;
+    res.json::<Value>().await
 
-    Ok(json_response)
 }
 
 fn build_request_body(prompt: &str) -> Value {
@@ -31,4 +33,21 @@ fn build_request_body(prompt: &str) -> Value {
         "model": "gpt-3.5-turbo",
         "messages": [{"role": "user", "content": prompt}]
     })
+}
+
+fn parse_args() -> String {
+    let args: Vec<String> = env::args().collect();
+    if args.len() < 2 {
+        std::process::exit(1);
+    }
+    args[1].clone()
+}
+
+
+fn print_response(response: &Value) {
+    if let Some(choice) = response["choices"].as_array() {
+        if let Some(content) = choice[0]["message"]["content"].as_str() {
+            println!("{}", content);
+        }
+    }
 }
