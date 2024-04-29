@@ -8,12 +8,12 @@ async fn main() {
     let prompt = parse_args();
     match ask_gpt(prompt).await {
         Ok(response) => print_response(&response),
-        Err(e) => println!("Error: {}", e),
+        Err(e) => eprintln!("Error: {}", e),
     }
 }
 
 async fn ask_gpt(prompt: String) -> Result<Value, Error> {
-    let api_key = env::var("OPENAI_APIKEY").unwrap();
+    let api_key = env::var("OPENAI_API_KEY").unwrap();
     let client = Client::new();
     let body = build_request_body(&prompt);
 
