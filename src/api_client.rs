@@ -1,4 +1,4 @@
-use crate::message::{Message, Role};
+use crate::message::Message;
 use reqwest::Client;
 use serde_json;
 use std::env;
@@ -28,7 +28,7 @@ pub async fn request(messages: &Vec<Message>) -> Result<serde_json::Value, reqwe
 
 fn build_body(messages: &Vec<Message>) -> serde_json::Value {
     serde_json::json!({
-        "model": "gpt-3.5-turbo",
+        "model": MODEL,
         "messages": messages,
     })
 }
@@ -43,6 +43,7 @@ pub async fn get_first_choice(messages: &Vec<Message>) -> Result<String, reqwest
 #[cfg(test)]
 mod test {
     use super::*;
+    use crate::message::Role;
 
     fn build_messages() -> Vec<Message> {
         vec![Message {

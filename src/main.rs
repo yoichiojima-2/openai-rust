@@ -9,7 +9,6 @@ async fn main() {
         role: Role::User,
         content: "this is a test".to_string(),
     }];
-    let res = api_client::request(&messages).await.unwrap();
     let first_choice = api_client::get_first_choice(&messages).await.unwrap();
     messages.push(Message {
         role: Role::Assistant,
