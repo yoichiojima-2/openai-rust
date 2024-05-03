@@ -1,6 +1,6 @@
 use crate::api_client;
-use std::io;
 use crate::message::{Message, Role};
+use std::io;
 
 const LANG: &str = "Japanese";
 

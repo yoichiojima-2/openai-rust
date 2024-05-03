@@ -1,16 +1,17 @@
-mod features;
 mod api_client;
+mod features;
 mod message;
 
 use clap::{Arg, ArgMatches, Command};
-
 
 #[tokio::main]
 async fn main() {
     let matches = get_command_matches();
     match matches.subcommand() {
         Some(("interactive", _)) => features::interactive_chat().await,
-        Some(("translate", args)) => features::translate(args.get_one::<String>("text").unwrap()).await,
+        Some(("translate", args)) => {
+            features::translate(args.get_one::<String>("text").unwrap()).await
+        }
         _ => println!("Please specify a subcommand"),
     }
 }
