@@ -6,6 +6,11 @@ use std::io;
 
 #[tokio::main]
 async fn main() {
+    interactive_chat().await;
+}
+
+async fn interactive_chat() {
+    println!("Type your message and press Enter to send it to the assistant.\n");
     let mut messages: Vec<Message> = Vec::new();
 
     loop {
@@ -18,7 +23,8 @@ async fn main() {
             content: input,
         });
 
-        let first_choice = api_client::get_first_choice(&messages).await.unwrap();
+        let response = api_client::request(&messages).await.unwrap();
+        let first_choice = api_client::get_first_choice(&response).await.unwrap();
 
         println!("{}", first_choice);
 

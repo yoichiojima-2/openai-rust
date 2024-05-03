@@ -33,10 +33,10 @@ fn build_body(messages: &Vec<Message>) -> serde_json::Value {
     })
 }
 
-pub async fn get_first_choice(messages: &Vec<Message>) -> Result<String, reqwest::Error> {
-    let res = request(messages).await.unwrap();
-    let first_choice = &res["choices"][0]["message"]["content"].as_str().unwrap();
-
+pub async fn get_first_choice(response: &serde_json::Value) -> Result<String, reqwest::Error> {
+    let first_choice = response["choices"][0]["message"]["content"]
+        .as_str()
+        .unwrap();
     Ok(first_choice.to_string())
 }
 
@@ -81,8 +81,9 @@ mod test {
     #[tokio::test]
     async fn test_get_first_choice() {
         let messages = build_messages();
-        let res = get_first_choice(&messages).await.unwrap();
+        let response = request(&messages).await.unwrap();
+        let first_choice = get_first_choice(&response).await.unwrap();
 
-        assert!(res.len() > 0);
+        assert!(first_choice != "");
     }
 }
