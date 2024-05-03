@@ -12,8 +12,8 @@ This is an OpenAI API client implemented in Rust. It allows for interacting with
 Clone the repository and build the project:
 
 ```bash
-git clone https://github.com/your-repo/openai-rust-client.git
-cd openai-rust-client
+git clone https://github.com/yoichiojima-2/openai-rust.git
+cd openai-rust
 cargo build --release
 ```
 
