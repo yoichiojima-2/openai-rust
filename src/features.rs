@@ -1,11 +1,13 @@
 use crate::api_client;
 use crate::message::{Message, Role};
-use std::io;
+use std::io::{self, Read};
+use std::fs::File;
 
 const LANG: &str = "Japanese";
 
 pub async fn interactive_chat() {
     println!("Type your message and press Enter to send it to the assistant.\n");
+
     let mut messages: Vec<Message> = Vec::new();
 
     loop {
@@ -32,7 +34,10 @@ pub async fn interactive_chat() {
     }
 }
 
-pub async fn translate(text: &str) {
+pub async fn translate(path: &str) {
+    let mut text = String::new();
+    File::open(path).unwrap().read_to_string(&mut text).unwrap();
+
     let messages: Vec<Message> = vec![
         Message {
             role: Role::System,
@@ -40,7 +45,7 @@ pub async fn translate(text: &str) {
         },
         Message {
             role: Role::User,
-            content: text.to_string(),
+            content: text,
         },
     ];
 
@@ -48,4 +53,15 @@ pub async fn translate(text: &str) {
     let first_choice = api_client::get_first_choice(&response).await.unwrap();
 
     println!("{}", first_choice);
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[tokio::test]
+    async fn test_translate() {
+        let path = "data/test.txt";
+        translate(path).await;
+    }
 }
