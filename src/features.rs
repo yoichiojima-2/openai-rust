@@ -1,7 +1,10 @@
+use std::fs::File;
+use std::io::{self, Read};
+use std::process::Command;
+use std::str;
+
 use crate::api_client;
 use crate::message::{Message, Role};
-use std::io::{self, Read};
-use std::fs::File;
 
 const LANG: &str = "Japanese";
 
@@ -55,6 +58,35 @@ pub async fn translate(path: &str) {
     println!("{}", first_choice);
 }
 
+pub async fn generate_commit_message(path: &str) {
+    let diff = git_diff(path);
+    let messages: Vec<Message> = vec![
+        Message {
+            role: Role::System,
+            content: "Make a commit message from the diff".to_string(),
+        },
+        Message {
+            role: Role::User,
+            content: diff,
+        },
+    ];
+
+    let response = api_client::request(&messages).await.unwrap();
+    let first_choice = api_client::get_first_choice(&response).await.unwrap();
+
+    println!("{}", first_choice);
+}
+
+fn git_diff(path: &str) -> String {
+    let output = Command::new("git")
+        .arg("diff")
+        .arg(path)
+        .output()
+        .unwrap();
+
+    str::from_utf8(&output.stdout).unwrap().to_string()
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
@@ -63,5 +95,11 @@ mod test {
     async fn test_translate() {
         let path = "data/test.txt";
         translate(path).await;
+    }
+
+    #[test]
+    fn test_git_diff() {
+        let res = git_diff(".");
+        assert!(res.is_empty() == false);
     }
 }
