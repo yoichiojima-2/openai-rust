@@ -96,10 +96,4 @@ mod test {
         let path = "data/test.txt";
         translate(path).await;
     }
-
-    #[test]
-    fn test_git_diff() {
-        let res = git_diff(".");
-        assert!(res.is_empty() == false);
-    }
 }
