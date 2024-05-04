@@ -1,40 +1,48 @@
-# OpenAI Rust Client
+# openai-rust
 
-## Overview
-This is an OpenAI API client implemented in Rust. It allows for interacting with the OpenAI API in a structured manner using commands from the command line. Currently, it supports interactive chatting and text translation.
+The `openai-rust` project is a command-line interface (CLI) tool written in Rust, designed to interact with OpenAI APIs. It supports multiple features like interactive chatting, translation, and generating commit messages.
 
-## Requirements
-- Rust
-- Clap (for parsing command-line arguments)
-- Tokio (for asynchronous operations)
+## Features
+
+- **Interactive Chat**: Engage in an interactive chat session.
+- **Translate**: Translate text from a specified file.
+- **Generate Commit Message**: Automatically generate a commit message for a given change.
 
 ## Installation
+
 Clone the repository and build the project:
 
 ```bash
-git clone https://github.com/yoichiojima-2/openai-rust.git
+git clone https://github.com/your-github/openai-rust.git
 cd openai-rust
 cargo build --release
 ```
 
 ## Usage
-To use this client, run the compiled binary with the desired subcommand.
 
-### Interactive Chat
-Start an interactive chat session with the assistant:
+Run the tool using the following commands:
 
-```bash
-./target/release/openai-rust interactive
-```
-
-This will allow you to send messages interactively and view responses from the OpenAI API.
-
-### Translate
-Translate text to Japanese (default language, configurable in the source code):
+### Start Interactive Chat
 
 ```bash
-./target/release/openai-rust translate --text "Your text here"
+Copy code
+cargo run -- interactive
 ```
 
-## Configuration
-You can modify the default language for translation by changing the LANG constant in the main Rust file.
+### Translate Text
+```bash
+Copy code
+cargo run -- translate <path-to-text-file>
+```
+
+### Generate Commit Message
+```bash
+Copy code
+cargo run -- commit-message <path-to-file>
+```
+
+## Dependencies
+
+- Rust
+- Clap
+- Tokio
