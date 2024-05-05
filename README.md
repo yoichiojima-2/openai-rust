@@ -1,5 +1,6 @@
 # openai-rust
 
+```sh
  _____________ 
 < openai-rust >
  ------------- 
@@ -24,6 +25,7 @@
                      ___) >____) >___   ^\_\_\_\_\_\_\)
                     ^^^//\\_^^//\\_^       ^(\_\_\_\)
                       ^^^ ^^ ^^^ ^
+```
 
 The `openai-rust` project is a command-line interface (CLI) tool written in Rust, designed to interact with OpenAI APIs. It supports multiple features like interactive chatting, translation, and generating commit messages.
 
