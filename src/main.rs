@@ -39,7 +39,7 @@ fn get_command_matches() -> ArgMatches {
             .arg(Arg::new("path").required(true).index(1)),
         )
         .subcommand(Command::new("code")
-            .about("WWrite code")
+            .about("Write code")
             .arg(Arg::new("prompt").required(true).index(1))
         )
         .get_matches()
