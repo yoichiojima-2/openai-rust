@@ -15,6 +15,9 @@ async fn main() {
         Some(("commit-message", args)) => {
             features::generate_commit_message(args.get_one::<String>("path").unwrap()).await
         },
+        Some(("code", args)) => {
+            features::write_code(args.get_one::<String>("prompt").unwrap()).await
+        },
         _ => println!("Please specify a subcommand"),
     }
 }
@@ -34,6 +37,10 @@ fn get_command_matches() -> ArgMatches {
             Command::new("commit-message")
             .about("Generate commit message")
             .arg(Arg::new("path").required(true).index(1)),
+        )
+        .subcommand(Command::new("code")
+            .about("WWrite code")
+            .arg(Arg::new("prompt").required(true).index(1))
         )
         .get_matches()
 }

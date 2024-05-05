@@ -87,6 +87,24 @@ fn git_diff(path: &str) -> String {
     str::from_utf8(&output.stdout).unwrap().to_string()
 }
 
+pub async fn write_code(prompt: &str) {
+    let messages: Vec<Message> = vec![
+        Message {
+            role: Role::System,
+            content: "Write a python code that does what's asked".to_string(),
+        },
+        Message {
+            role: Role::User,
+            content: prompt.to_string(),
+        },
+    ];
+
+    let response = api_client::request(&messages).await.unwrap();
+    let first_choice = api_client::get_first_choice(&response).await.unwrap();
+
+    println!("{}", first_choice);
+}
+
 #[cfg(test)]
 mod test {
     use super::*;
