@@ -1,4 +1,6 @@
-```sh openai-rust write a readme.md```
+```sh
+openai-rust write a readme.md
+```
 
 # openai-rust
 
