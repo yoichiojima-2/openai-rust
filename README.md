@@ -1,3 +1,5 @@
+'''sh openai-rust write a readme.md'''
+
 # openai-rust
 
 The `openai-rust` project is a command-line interface (CLI) tool written in Rust, designed to interact with OpenAI APIs. It supports multiple features like interactive chatting, translation, and generating commit messages.
