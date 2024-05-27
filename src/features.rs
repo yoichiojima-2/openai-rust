@@ -105,6 +105,31 @@ pub async fn write_code(prompt: &str) {
     println!("{}", first_choice);
 }
 
+pub async fn debug(path: &str, issue: &str) {
+    let mut code = String::new();
+    File::open(path).unwrap().read_to_string(&mut code).unwrap();
+
+    let messages: Vec<Message> = vec![
+        Message {
+            role: Role::System,
+            content: format!("Debug given code. code and issue will be given."),
+        },
+        Message {
+            role: Role::User,
+            content: code,
+        },
+        Message {
+            role: Role::User,
+            content: issue.to_string(),
+        },
+    ];
+
+    let response = api_client::request(&messages).await.unwrap();
+    let first_choice = api_client::get_first_choice(&response).await.unwrap();
+
+    println!("{}", first_choice);
+}
+
 #[cfg(test)]
 mod test {
     use super::*;

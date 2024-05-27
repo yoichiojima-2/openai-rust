@@ -18,6 +18,11 @@ async fn main() {
         Some(("code", args)) => {
             features::write_code(args.get_one::<String>("prompt").unwrap()).await
         },
+        Some(("debug", args)) => {
+            let path = args.get_one::<String>("path").unwrap();
+            let issue = args.get_one::<String>("issue").unwrap();
+            features::debug(path, issue).await
+        },
         _ => println!("Please specify a subcommand"),
     }
 }
@@ -41,6 +46,12 @@ fn get_command_matches() -> ArgMatches {
         .subcommand(Command::new("code")
             .about("Write code")
             .arg(Arg::new("prompt").required(true).index(1))
+        )
+        .subcommand(
+            Command::new("debug")
+                .about("Debug code")
+                .arg(Arg::new("path").required(true).index(1))
+                .arg(Arg::new("issue").required(true).index(2)),
         )
         .get_matches()
 }
