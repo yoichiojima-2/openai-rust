@@ -11,7 +11,7 @@ The openai-rust project is a command-line interface (CLI) tool written in Rust, 
 - Clone the repository and build the project:
 
 ```bash
-git clone https://github.com/your-github/openai-rust.git
+git clone https://github.com/yoichiojima-2/openai-rust.git
 cd openai-rust
 cargo build --release
 ```
