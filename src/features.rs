@@ -91,7 +91,7 @@ pub async fn write_code(prompt: &str) {
     let messages: Vec<Message> = vec![
         Message {
             role: Role::System,
-            content: "Write a python code that does what's asked".to_string(),
+            content: "Write a code that does what's asked".to_string(),
         },
         Message {
             role: Role::User,

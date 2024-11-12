@@ -8,7 +8,7 @@ use clap::{Arg, ArgMatches, Command};
 async fn main() {
     let matches = get_command_matches();
     match matches.subcommand() {
-        Some(("interactive", _)) => features::interactive_chat().await,
+        Some(("chat", _)) => features::interactive_chat().await,
         Some(("translate", args)) => {
             features::translate(args.get_one::<String>("path").unwrap()).await
         },
@@ -27,12 +27,13 @@ async fn main() {
     }
 }
 
+
 fn get_command_matches() -> ArgMatches {
     Command::new("openai-rust")
         .version("2024.5.3")
         .author("Yoichi Ojima <yoichiojima@gmail.com>")
         .about("OpenAI API client written in Rust")
-        .subcommand(Command::new("interactive").about("Start interactive chat"))
+        .subcommand(Command::new("chat").about("Start interactive chat"))
         .subcommand(
             Command::new("translate")
                 .about(format!("Translate given text"))
