@@ -4,7 +4,7 @@ use serde_json;
 use std::env;
 
 const URL: &str = "https://api.openai.com/v1/chat/completions";
-const MODEL: &str = "gpt-3.5-turbo";
+const MODEL: &str = "gpt-4o-mini";
 
 pub async fn request(messages: &Vec<Message>) -> Result<serde_json::Value, reqwest::Error> {
     let client = Client::new();
