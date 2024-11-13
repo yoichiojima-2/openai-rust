@@ -30,7 +30,7 @@ async fn main() {
 
 fn get_command_matches() -> ArgMatches {
     Command::new("openai-rust")
-        .version("2024.5.3")
+        .version("2024.11.13")
         .author("Yoichi Ojima <yoichiojima@gmail.com>")
         .about("OpenAI API client written in Rust")
         .subcommand(Command::new("chat").about("Start interactive chat"))
