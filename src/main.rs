@@ -9,6 +9,9 @@ async fn main() {
     let matches = get_command_matches();
     match matches.subcommand() {
         Some(("chat", _)) => features::interactive_chat().await,
+        Some(("ask", args)) => {
+            features::ask(args.get_one::<String>("prompt").unwrap()).await
+        },
         Some(("translate", args)) => {
             features::translate(args.get_one::<String>("path").unwrap()).await
         },
@@ -34,6 +37,11 @@ fn get_command_matches() -> ArgMatches {
         .author("Yoichi Ojima <yoichiojima@gmail.com>")
         .about("OpenAI API client written in Rust")
         .subcommand(Command::new("chat").about("Start interactive chat"))
+        .subcommand(
+            Command::new("ask")
+                .about(format!("Ask by simple prompt text"))
+                .arg(Arg::new("prompt").required(true).index(1))
+        )
         .subcommand(
             Command::new("translate")
                 .about(format!("Translate given text"))
